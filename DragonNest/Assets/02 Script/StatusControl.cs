@@ -22,7 +22,7 @@ public class StatusControl : MonoBehaviour {
 
 	void Start () {
 		
-        //로딩시 골드, 마나, 군사 정보 대입해야함.
+        //로딩시 골드, 마나, 군사 정보 입력해야함.
 
 
 

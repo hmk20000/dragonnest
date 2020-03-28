@@ -14,10 +14,8 @@ public class MeetingManager : MonoBehaviour {
     [SerializeField]
     GameObject Charector;
 
-
-
     [SerializeField]
-    GameObject MeetMng;
+    Text Name;
 
 
   
@@ -38,16 +36,52 @@ public class MeetingManager : MonoBehaviour {
     // 조우 버튼용 함수 
     public void Meeting( int no)
     {
-        Meet.transform.localPosition = new Vector3(0,-20,0);
 
+        switch(no)
+        {
+            case 0: //핑크
+                SetMeeting(GetComponent<MonsterManager>().Pink);
+                break;
+
+            case 1: //옐로
+                SetMeeting(GetComponent<MonsterManager>().Yellow);
+                break;
+
+            case 2: //블랙
+                SetMeeting(GetComponent<MonsterManager>().Choco);
+                break;
+
+            case 3: //고블린
+                SetMeeting(GetComponent<MonsterManager>().Goblin);
+                break;
+
+            case 4: //오크
+                SetMeeting(GetComponent<MonsterManager>().Ork);
+                break;
+        }
+
+
+        //조우 화면 중앙
+        Meet.transform.localPosition = new Vector3(0, -20, 0);
+
+    }
+
+    public void SetMeeting(Monster _target)
+    {
         //조우 화면 변경  
-        BG.GetComponent<Image>().sprite         = MeetMng.GetComponent<MonsterManager>().BGImg  [(int)MonsterManager.Field.Forest];
-        Charector.GetComponent<Image>().sprite  = MeetMng.GetComponent<MonsterManager>().MonImg [(int)MonsterManager.MonNo.ORK];
+        BG.GetComponent<Image>().sprite = GetComponent<MonsterManager>().BGImg[_target.BG];
+        Charector.GetComponent<Image>().sprite = GetComponent<MonsterManager>().MonImg[_target.no];
+        Charector.transform.localScale = new Vector3(_target.size, _target.size, _target.size);
+        Name.text = _target.name;
+
 
 
     }
 
-
-    
+    public void ChoiceButton()
+    {
+        //조우 화면 중앙
+        Meet.transform.localPosition = new Vector3(1000, -20, 0);
+    }
 }
 
