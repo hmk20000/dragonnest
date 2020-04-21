@@ -57,8 +57,8 @@ public class MeetingManager : MonoBehaviour {
                 A.transform.position.y > -20 &&
                 A.transform.position.y < 20)
             {
-                A.transform.position = new Vector3( A.transform.position.x * 2, 
-                                                    A.transform.position.y * 2, 0);
+                A.transform.position = new Vector3( A.transform.position.x + 20, 
+                                                    A.transform.position.y + 20, 0);
 
             }
             
@@ -83,6 +83,8 @@ public class MeetingManager : MonoBehaviour {
             Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
             Name.color                              += new Color(0, 0, 0, 1f * Time.deltaTime);
         }
+
+
 
 	}
 
