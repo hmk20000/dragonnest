@@ -29,11 +29,11 @@ public class Monster
     readonly float size = 1;      //이미지 크기 비율
 
 
-    public string GetName() { return name; }
-    public int GetLv() { return level; }
-    public int GetBackGroundNum() { return BG; }
-    public int GetImageNum() { return no; }
-    public float GetSize() { return size; }
+    public string GetName()         { return name; }
+    public int GetLv()              { return level; }
+    public int GetBackGroundNum()   { return BG; }
+    public int GetImageNum()        { return no; }
+    public float GetSize()          { return size; }
 }
 
 public class MonsterManager : MonoBehaviour {
@@ -68,12 +68,12 @@ public class MonsterManager : MonoBehaviour {
     //몬스터 배열
     public Monster[] A = {
 
-     new Monster("딸기맛\n슬라임",     1, (int)Field.Forest, (int)MonNo.PINK, 1),
-     new Monster("바나나맛\n슬라임", 1, (int)Field.Forest, (int)MonNo.YELLOW, 1),
-     new Monster("쪼꼬맛\n슬라임",     1, (int)Field.Forest, (int)MonNo.CHOCO, 0.8f),
-     new Monster("키위\n고블린",            1, (int)Field.Forest, (int)MonNo.GOBLIN, 1),
-     new Monster("수박\n좀비",              1, (int)Field.Forest, (int)MonNo.ZOMBIE, 1.5f),
-     new Monster("미숫가루\n미이라",        1, (int)Field.Forest, (int)MonNo.MUMY, 1.5f),
+     new Monster("딸기맛\n슬라임",          1, (int)Field.Forest, (int)MonNo.PINK,    1),
+     new Monster("바나나맛\n슬라임",        1, (int)Field.Forest, (int)MonNo.YELLOW,   1),
+     new Monster("쪼꼬맛\n슬라임",          1, (int)Field.Forest, (int)MonNo.CHOCO,   0.8f),
+     new Monster("키위\n고블린",            1, (int)Field.Forest, (int)MonNo.GOBLIN,     1),
+     new Monster("수박\n좀비",              1, (int)Field.Forest, (int)MonNo.ZOMBIE,    1.5f),
+     new Monster("미숫가루\n미이라",        1, (int)Field.Forest, (int)MonNo.MUMY,     1.5f),
         //황금 고블린 ++
 
      new Monster("숯불구이\n오크",          2, (int)Field.Forest, (int)MonNo.ORK, 1.5f),

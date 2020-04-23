@@ -35,34 +35,62 @@ public class MeetingManager : MonoBehaviour {
     // 버튼 관리용 @@@@@@@@@@@@@@@@@@@@@@@@@@@
     [SerializeField]
     GameObject Canvas;
+    [SerializeField]
+    GameObject NestBtn;
+    int NowBtn = 0;
     int MaxBtn = 10;
     public GameObject MeetBtn;
-
-
+    public List<GameObject> BtnList;
+    
 
     void Start () {
-		
-        for( int i = 0; i < MaxBtn; i++)
+        // 세이브 및 로드우선 호출 
+       
+
+
+        //  버튼 개수 체크
+        if (BtnList.Count == 0)
+            BtnList.Add(NestBtn);
+
+        NowBtn = BtnList.Count;
+
+
+        if (NowBtn < MaxBtn )
         {
-           var A =  Instantiate(MeetBtn);
-            A.transform.SetParent(Canvas.transform);
 
-            // 버튼 위치 랜덤 생성
-            A.transform.localPosition = new Vector3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-200, 200), 0);
+                for( int i = NowBtn; i < MaxBtn; i++)
+                {
+
+                   var A =  Instantiate(MeetBtn);
+                    A.transform.SetParent(Canvas.transform);
 
 
-            // 동굴 위치가 안 가리게
-            if(A.transform.position.x > -20 && 
-                A.transform.position.x < 20 &&
-                A.transform.position.y > -20 &&
-                A.transform.position.y < 20)
-            {
-                A.transform.position = new Vector3( A.transform.position.x + 20, 
-                                                    A.transform.position.y + 20, 0);
+                    bool check = true;
+                    while(check == true )
+                    {
+                        // 버튼 위치 랜덤 생성
+                        A.transform.localPosition = new Vector3(UnityEngine.Random.Range(-200, 200), UnityEngine.Random.Range(-350, 200), 0);
 
-            }
-            
-        }
+
+                        // 다른 버튼 안 가리게
+                        check = false;
+                        for (int j = 0; j < BtnList.Count; j++)
+                        {
+                            //거리 리턴 함수
+                            if( Vector3.Distance(A.transform.localPosition , BtnList[j].transform.localPosition ) < 50)
+                            {
+                                check = true;   
+                            }
+                        }        
+
+                    }
+
+                DontDestroyOnLoad(A);
+                BtnList.Add(A);
+
+
+            }//for
+        }//if
 
 
 	}
@@ -103,6 +131,8 @@ public class MeetingManager : MonoBehaviour {
         Meet.transform.localPosition = new Vector3(0, -20, 0);
 
         FadeOn = true;
+
+
         
     }
 
@@ -117,6 +147,7 @@ public class MeetingManager : MonoBehaviour {
         Charector.GetComponent<Image>().sprite  = GetComponent<MonsterManager>().MonImg[_target.GetImageNum()];
         Charector.transform.localScale          = new Vector3(_target.GetSize(), _target.GetSize());
         Name.text                               = _target.GetName();
+ 
 
 
 
@@ -137,6 +168,8 @@ public class MeetingManager : MonoBehaviour {
         BG.GetComponent<Image>().color          = new Color(0, 0, 0, 0);
         Charector.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
         Name.color                              = new Color(0, 0, 0, 0);
+
+
 
         SceneManager.LoadScene("Main");
 
