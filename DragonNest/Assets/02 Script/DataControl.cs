@@ -19,34 +19,52 @@ public class DataControl : MonoBehaviour {
     Text ArmyPoint;
     static int army = 0;
 
-
     float time = 0;
+    public SaveData data = new SaveData();
 
 	void Start () {
-		
+        //저장 기능 리셋.
+        // PlayerPrefs.DeleteAll();
+
+
+		loadData();
         //로딩시 골드, 마나, 군사 정보 입력해야함.
-
-
-
 	}
 	
 	void Update () {
 
-        GoldPoint.text = gold.ToString();
-        ManaPoint.text = mana.ToString();
-        ArmyPoint.text = army.ToString();
-
-
+        GoldPoint.text = data.gold.ToString();
+        ManaPoint.text = data.mana.ToString();
+        ArmyPoint.text = data.army.ToString();
 
         //시간 경과 골드 생성 (저장 연습용)
         time += Time.deltaTime;
         if(time >= 1)
         {
             time--;
-            gold++;
+            data.gold++;
+            saveData();
         }
 
-
-
 	}
+    string ObjectToJson(object obj){
+        return JsonUtility.ToJson(obj);
+    }
+    T JsonToObject<T>(string jsonData){
+        return JsonUtility.FromJson<T>(jsonData);
+    }
+
+    public void saveData(){
+        string jsonData = ObjectToJson(data);
+        Debug.Log(jsonData);
+        PlayerPrefs.SetString("data",jsonData);
+    }
+
+    public void loadData(){
+        if(!PlayerPrefs.HasKey("data")){
+            return;
+        }
+        string stringData = PlayerPrefs.GetString("data");
+        data = JsonToObject<SaveData>(stringData);
+    }
 }
