@@ -7,4 +7,8 @@ public class SaveData{
 	public int gold;
 	public int mana;
 	public int army;
+
+    public int MeetBtnCount = 0;
+
+    public string BtnPos = "";
 }

@@ -426,7 +426,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &478638078
 MonoBehaviour:
@@ -442,6 +442,12 @@ MonoBehaviour:
   GoldPoint: {fileID: 681642153}
   ManaPoint: {fileID: 1895017260}
   ArmyPoint: {fileID: 1387149061}
+  data:
+    gold: 0
+    mana: 0
+    army: 0
+    MeetBtnCount: 0
+    BtnPos: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +481,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1355,7 +1361,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1805893984
 MonoBehaviour:
@@ -1390,6 +1396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e68c7b16b783c459aa5ec17c4fb0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DataMNG: {fileID: 478638076}
   Meet: {fileID: 1100967359}
   BG: {fileID: 1843522850}
   Charector: {fileID: 457812763}

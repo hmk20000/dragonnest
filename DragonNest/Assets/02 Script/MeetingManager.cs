@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MeetingManager : MonoBehaviour {
+    [SerializeField]
+    GameObject DataMNG;
 
     // 조우 관리용 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     [SerializeField]
@@ -23,6 +25,7 @@ public class MeetingManager : MonoBehaviour {
 
 
     bool FadeOn = false;
+    bool BackCurtain = false;
 
 
     static  int LV1Count = 7;
@@ -38,23 +41,100 @@ public class MeetingManager : MonoBehaviour {
     [SerializeField]
     GameObject NestBtn;
     int NowBtn = 0;
-    int MaxBtn = 10;
+    int MaxBtn = 5;
+    
     public GameObject MeetBtn;
     public List<GameObject> BtnList;
-    
+
+
 
     void Start () {
         // 세이브 및 로드우선 호출 
-       
+
+        //DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
 
 
-        //  버튼 개수 체크
-        if (BtnList.Count == 0)
-            BtnList.Add(NestBtn);
 
-        NowBtn = BtnList.Count;
+        
+        if (DataMNG.GetComponent<DataControl>().data.MeetBtnCount == 0)  //  첫 생성 동굴버튼
+        {
+            Debug.Log("Nest 버튼 정보 입력 성공");
 
 
+            //prefs 저장 
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += NestBtn.transform.localPosition.x.ToString();
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += "x";
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += NestBtn.transform.localPosition.y.ToString();
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += "y";
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += 1;
+            //DataMNG.GetComponent<DataControl>().data.BtnPos += "!";
+            //DataMNG.GetComponent<DataControl>().data.MeetBtnCount++;
+
+
+        }
+        else // 로드시 
+        {
+            string dumy = DataMNG.GetComponent<DataControl>().data.BtnPos;
+
+            int index = 0;
+            for (int i = 0; i < DataMNG.GetComponent<DataControl>().data.MeetBtnCount; i++)
+            {
+
+                var A = Instantiate(MeetBtn);
+                A.transform.SetParent(Canvas.transform);
+
+                    float x = 0;
+                    float y = 0;
+
+                //pos 재설정
+                for(int j = index;  j< dumy.Length ;  j++ )
+                {
+                    
+
+
+                    if(dumy[j] == 'X')
+                    {
+                        x = Convert.ToSingle(  dumy.Substring(index, j-index) );
+
+                        Debug.Log(j + "번째 x: " + x);
+
+                        index = j + 1;
+                    }
+
+                    else if(dumy[j] == 'Y')
+                    {
+                        y = Convert.ToSingle(  dumy.Substring(index, j-index) );
+
+                        Debug.Log(j + "번째 y: " + y );
+
+                        index = j + 1;
+                    }
+
+                    else if ( dumy[j] == '!')
+                    {
+                        A.transform.localPosition = new Vector3(x, y);
+                        index = j + 1;
+                        break;
+                    }
+
+                }  //pos 설정
+
+
+                BtnList.Add(A);
+
+
+            }//for
+
+
+
+            NowBtn = DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
+            MaxBtn = DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
+        }//로드시 
+
+
+        
+
+        // 현재 버튼 수 < 총 버튼수    ==>> 새 버튼이 필요할 때 
         if (NowBtn < MaxBtn )
         {
 
@@ -85,8 +165,15 @@ public class MeetingManager : MonoBehaviour {
 
                     }
 
-                DontDestroyOnLoad(A);
                 BtnList.Add(A);
+                DataMNG.GetComponent<DataControl>().data.BtnPos += A.transform.localPosition.x.ToString();
+                DataMNG.GetComponent<DataControl>().data.BtnPos += "X";
+                DataMNG.GetComponent<DataControl>().data.BtnPos += A.transform.localPosition.y.ToString();
+                DataMNG.GetComponent<DataControl>().data.BtnPos += "Y";
+                DataMNG.GetComponent<DataControl>().data.BtnPos += 1;
+                DataMNG.GetComponent<DataControl>().data.BtnPos += "!";
+
+                DataMNG.GetComponent<DataControl>().data.MeetBtnCount++;
 
 
             }//for
@@ -97,6 +184,8 @@ public class MeetingManager : MonoBehaviour {
 	
 	void Update () {
 		
+
+        // 조우화면 페이드
         if( FadeOn)
         {
             Meet.GetComponent<Image>().color        += new Color(0, 0, 0, 1f * Time.deltaTime);
@@ -104,13 +193,17 @@ public class MeetingManager : MonoBehaviour {
             ChoisBtn.GetComponent<Image>().color    += new Color(0, 0, 0, 1f * Time.deltaTime);
             BG.GetComponent<Image>().color          += new Color(0, 0, 0, 1f * Time.deltaTime);
             
+            if (BG.GetComponent<Image>().color.a > 0.9) 
+            {
+                Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
+                Name.color                              += new Color(0, 0, 0, 1f * Time.deltaTime);
+
+                if (Name.color.a == 1)
+                    FadeOn = false;
+            }
         }
 
-        if (BG.GetComponent<Image>().color.a > 0.9) 
-        {
-            Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
-            Name.color                              += new Color(0, 0, 0, 1f * Time.deltaTime);
-        }
+
 
 
 
@@ -137,7 +230,7 @@ public class MeetingManager : MonoBehaviour {
     }
 
 
-    //
+    // 조우화면 조정용
     public void SetMeeting(int _mon)
     {
         Monster _target = GetComponent<MonsterManager>().A[_mon];
