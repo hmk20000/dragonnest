@@ -28,7 +28,7 @@ public class DataControl : MonoBehaviour {
 
 	void Start () {
         //저장 기능 리셋.
-       //PlayerPrefs.DeleteAll();
+       PlayerPrefs.DeleteAll();
 
 
 		loadData();
@@ -71,8 +71,10 @@ public class DataControl : MonoBehaviour {
 
     public void saveData(){
         string jsonData = ObjectToJson(data);
-        Debug.Log(jsonData);
         PlayerPrefs.SetString("data",jsonData);
+
+
+        Debug.Log(jsonData);
     }
 
 

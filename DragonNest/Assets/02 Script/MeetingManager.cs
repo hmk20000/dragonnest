@@ -22,13 +22,14 @@ public class MeetingManager : MonoBehaviour {
      GameObject ChoisBtn;
     [SerializeField]
     GameObject TextField;
+    [SerializeField]
+    Text StoryText;
 
 
     bool FadeOn = false;
     bool BackCurtain = false;
 
 
-    static  int LV1Count = 7;
 
 
     int MeetMin = 0; //랜덤 조우시, 몬스터 범위
@@ -51,8 +52,6 @@ public class MeetingManager : MonoBehaviour {
     void Start () {
         // 세이브 및 로드우선 호출 
 
-        //DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
-
 
 
         
@@ -60,15 +59,6 @@ public class MeetingManager : MonoBehaviour {
         {
             Debug.Log("Nest 버튼 정보 입력 성공");
 
-
-            //prefs 저장 
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += NestBtn.transform.localPosition.x.ToString();
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += "x";
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += NestBtn.transform.localPosition.y.ToString();
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += "y";
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += 1;
-            //DataMNG.GetComponent<DataControl>().data.BtnPos += "!";
-            //DataMNG.GetComponent<DataControl>().data.MeetBtnCount++;
 
 
         }
@@ -96,7 +86,6 @@ public class MeetingManager : MonoBehaviour {
                     {
                         x = Convert.ToSingle(  dumy.Substring(index, j-index) );
 
-                        Debug.Log(j + "번째 x: " + x);
 
                         index = j + 1;
                     }
@@ -104,8 +93,6 @@ public class MeetingManager : MonoBehaviour {
                     else if(dumy[j] == 'Y')
                     {
                         y = Convert.ToSingle(  dumy.Substring(index, j-index) );
-
-                        Debug.Log(j + "번째 y: " + y );
 
                         index = j + 1;
                     }
@@ -198,8 +185,12 @@ public class MeetingManager : MonoBehaviour {
                 Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
                 Name.color                              += new Color(0, 0, 0, 1f * Time.deltaTime);
 
-                if (Name.color.a == 1)
+                if (Name.color.a >= 0.99)
+                {
                     FadeOn = false;
+
+                    StartCoroutine(  Story("테스트 중입니당 아주아주 길게 쓰는 사이에 버튼을 누르는 처ㅣ를 해보려고합니다.") );
+                }
             }
         }
 
@@ -209,13 +200,51 @@ public class MeetingManager : MonoBehaviour {
 
 	}
 
+    // 분리 진행용 함수 (코루틴)
+    IEnumerator Story(string _story)
+    {
+
+
+        for ( int i = 0; i < _story.Length + 1; i++)
+        {
+            if(Input.GetMouseButton(0))
+            {
+                Debug.Log("클릭!!! ");
+                i = _story.Length  ;
+            }
+
+            StoryText.text = _story.Substring(0, i);
+
+            yield return new WaitForSeconds(0.08f);
+
+
+        }
+
+        yield return null;
+    }
 
 
 
     // 조우 버튼용 함수 
-    public void Meeting( )
+    public void Meeting()
     {
-        int mon = UnityEngine.Random.Range(MeetMin, MeetMax);
+        int mon = 99;
+
+        while (true)
+        {
+            mon = UnityEngine.Random.Range(MeetMin, MeetMax);
+
+
+            // Lv 1 조우 횟수 체크
+            if(mon < 8 &&
+                DataMNG.GetComponent<DataControl>().data.LV1Count > 0)
+            {
+                DataMNG.GetComponent<DataControl>().data.LV1Count--;
+                break;
+            }
+
+
+        }
 
 
         SetMeeting(mon);

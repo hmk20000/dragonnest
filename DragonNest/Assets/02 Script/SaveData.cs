@@ -11,4 +11,12 @@ public class SaveData{
     public int MeetBtnCount = 0;
 
     public string BtnPos = "";
+
+
+
+    public int LV1Count = 7;
+    public int LV2Count = 6;
+    public int LV3Count = 4;
+    public int LV4Count = 3;
+
 }
