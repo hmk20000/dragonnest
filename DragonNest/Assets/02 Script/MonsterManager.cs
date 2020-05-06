@@ -43,7 +43,9 @@ public class MonsterManager : MonoBehaviour {
 
     public enum Field
     {
-        Forest = 0
+        Town,
+        Forest,
+        IceCenter
     }
 
     // --------------------------------------- 몬스터 정보 ---------------------------------------
@@ -51,14 +53,11 @@ public class MonsterManager : MonoBehaviour {
 
     public enum MonNo
     {
-        PINK, //0
-        YELLOW,
-        CHOCO,
-        GOBLIN,
+        SLIM,
         ZOMBIE,
-        MUMY, //5
-        ORK,
-        SKELETON
+        SKELETON,
+        ICEWOLF,
+        BENSH
 
     }
 
@@ -68,31 +67,14 @@ public class MonsterManager : MonoBehaviour {
     //몬스터 배열
     public Monster[] A = {
 
-     new Monster("딸기맛\n슬라임",          1, (int)Field.Forest, (int)MonNo.PINK,    1),
-     new Monster("바나나맛\n슬라임",        1, (int)Field.Forest, (int)MonNo.YELLOW,   1),
-     new Monster("쪼꼬맛\n슬라임",          1, (int)Field.Forest, (int)MonNo.CHOCO,   0.8f),
-     new Monster("키위\n고블린",            1, (int)Field.Forest, (int)MonNo.GOBLIN,     1),
-     new Monster("수박\n좀비",              1, (int)Field.Forest, (int)MonNo.ZOMBIE,    1.5f),
-     new Monster("미숫가루\n미이라",        1, (int)Field.Forest, (int)MonNo.MUMY,     1.5f),
-        //황금 고블린 ++
-
-     new Monster("숯불구이\n오크",          2, (int)Field.Forest, (int)MonNo.ORK, 1.5f),
-     new Monster("사골\n스켈레톤",          2, (int)Field.Forest, (int)MonNo.SKELETON, 1.5f)
-
-};
+     new Monster("무명초슬라임",          1, (int)Field.Forest, (int)MonNo.SLIM,    0.8f),
+     new Monster("좀비",                  1, (int)Field.Forest, (int)MonNo.ZOMBIE,    1),
+     new Monster("해골 병사",             1, (int)Field.Forest, (int)MonNo.SKELETON,    1),
+     new Monster("아이스 울프",           1, (int)Field.IceCenter, (int)MonNo.ICEWOLF,    1),
+     new Monster("벤시",                  1, (int)Field.Forest, (int)MonNo.BENSH,    0.9f),
 
 
-    //public Monster Pink    = new Monster("딸기맛\n핑크 슬라임",       1, (int)Field .Forest  , (int)MonNo.PINK, 1);
-    //public Monster Yellow  = new Monster("바나나맛\n옐로우 슬라임",   1, (int)Field .Forest  , (int)MonNo.YELLOW, 1);
-    //public Monster Choco   = new Monster("쪼꼬맛\n다크 슬라임",       1, (int)Field .Forest  , (int)MonNo.CHOCO, 0.8f);
-    //public Monster Goblin  = new Monster("키위\n고블린",              1, (int)Field .Forest  , (int)MonNo.GOBLIN, 1);
-    //public Monster Zombie  = new Monster("수박\n좀비" ,               1, (int)Field .Forest  , (int)MonNo.ZOMBIE, 1.5f);
-    //public Monster Mumy    = new Monster("미숫가루\n미이라",          1, (int)Field.Forest   , (int)MonNo.MUMY, 1.5f);
-    ////황금 고블린 ++
-
-    //public Monster Ork     = new Monster("숯불구이\n오크",            2, (int)Field .Forest  , (int)MonNo.ORK, 1.5f);
-    //public Monster Skeleton= new Monster("사골\n스켈레톤" ,           2, (int)Field .Forest  , (int)MonNo.SKELETON, 1.5f);
-
+    };
 
 
 

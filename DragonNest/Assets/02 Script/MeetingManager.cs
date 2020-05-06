@@ -26,96 +26,61 @@ public class MeetingManager : MonoBehaviour {
     Text StoryText;
 
 
-    bool FadeOn = false;
+    [SerializeField]
+    GameObject FadeBlack;
+    bool BlackOn = false;
+
+    bool FadeOn = false; // 조우창 패이드
     bool BackCurtain = false;
 
 
-
-
-    int MeetMin = 0; //랜덤 조우시, 몬스터 범위
-    int MeetMax = 7;
 
 
     // 버튼 관리용 @@@@@@@@@@@@@@@@@@@@@@@@@@@
     [SerializeField]
     GameObject Canvas;
     [SerializeField]
-    GameObject NestBtn;
+    Button NestBtn;
     int NowBtn = 0;
     int MaxBtn = 5;
     
-    public GameObject MeetBtn;
-    public List<GameObject> BtnList;
+    public Button MeetBtn;
+    int IngBtn = 99;
 
 
 
     void Start () {
         // 세이브 및 로드우선 호출 
 
-
-
-        
-        if (DataMNG.GetComponent<DataControl>().data.MeetBtnCount == 0)  //  첫 생성 동굴버튼
+        if (DataMNG.GetComponent<DataControl>().data.BtnCount == 0)  //  첫 생성 동굴버튼
         {
-            Debug.Log("Nest 버튼 정보 입력 성공");
 
+            DataMNG.GetComponent<DataControl>().data.BtnPos.Add(NestBtn.transform.localPosition);
 
 
         }
         else // 로드시 
         {
-            string dumy = DataMNG.GetComponent<DataControl>().data.BtnPos;
-
-            int index = 0;
-            for (int i = 0; i < DataMNG.GetComponent<DataControl>().data.MeetBtnCount; i++)
+            for( int i = 0; i < DataMNG.GetComponent<DataControl>().data.BtnCount; i++)
             {
-
-                var A = Instantiate(MeetBtn);
+                Button A = Instantiate(MeetBtn);
+                A.name = i.ToString();
                 A.transform.SetParent(Canvas.transform);
+                A.transform.localPosition = DataMNG.GetComponent<DataControl>().data.BtnPos[i + 1]; // 홈버튼이 배열 0번에 저장되있음
 
-                    float x = 0;
-                    float y = 0;
+                int _i = i;
+                Debug.Log("로드시 순회 확인 " + i  + " 몬스터 번호 :" + _i);
+                A.onClick.AddListener(  delegate () { Meeting(_i); }   );
 
-                //pos 재설정
-                for(int j = index;  j< dumy.Length ;  j++ )
+
+                if(DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] == 99)
                 {
-                    
+                    A.GetComponent<Image>().color += new Color(0, 0, 0, -0.7f);
+                }
+            }
 
 
-                    if(dumy[j] == 'X')
-                    {
-                        x = Convert.ToSingle(  dumy.Substring(index, j-index) );
-
-
-                        index = j + 1;
-                    }
-
-                    else if(dumy[j] == 'Y')
-                    {
-                        y = Convert.ToSingle(  dumy.Substring(index, j-index) );
-
-                        index = j + 1;
-                    }
-
-                    else if ( dumy[j] == '!')
-                    {
-                        A.transform.localPosition = new Vector3(x, y);
-                        index = j + 1;
-                        break;
-                    }
-
-                }  //pos 설정
-
-
-                BtnList.Add(A);
-
-
-            }//for
-
-
-
-            NowBtn = DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
-            MaxBtn = DataMNG.GetComponent<DataControl>().data.MeetBtnCount;
+            NowBtn = DataMNG.GetComponent<DataControl>().data.BtnCount;
         }//로드시 
 
 
@@ -125,45 +90,65 @@ public class MeetingManager : MonoBehaviour {
         if (NowBtn < MaxBtn )
         {
 
-                for( int i = NowBtn; i < MaxBtn; i++)
+            for( int i = NowBtn; i < MaxBtn; i++)
+            {
+                    
+                // 버튼 생성
+                var A =  Instantiate(MeetBtn);
+                    A.name = i.ToString();
+
+                //버튼 위치 조절 
+                A.transform.SetParent(Canvas.transform);
+                bool check = true;
+                while(check == true )
                 {
+                    // 버튼 위치 랜덤 생성
+                    A.transform.localPosition = new Vector3(UnityEngine.Random.Range(-200, 200), UnityEngine.Random.Range(-350, 200), 0);
 
-                   var A =  Instantiate(MeetBtn);
-                    A.transform.SetParent(Canvas.transform);
 
-
-                    bool check = true;
-                    while(check == true )
+                    // 다른 버튼 안 가리게
+                    check = false;
+                    for (int j = 0; j < DataMNG.GetComponent<DataControl>().data.BtnCount +1 ; j++)
                     {
-                        // 버튼 위치 랜덤 생성
-                        A.transform.localPosition = new Vector3(UnityEngine.Random.Range(-200, 200), UnityEngine.Random.Range(-350, 200), 0);
-
-
-                        // 다른 버튼 안 가리게
-                        check = false;
-                        for (int j = 0; j < BtnList.Count; j++)
+                        //거리 리턴 함수
+                        if( Vector3.Distance(A.transform.localPosition , DataMNG.GetComponent<DataControl>().data.BtnPos[j] ) < 50)
                         {
-                            //거리 리턴 함수
-                            if( Vector3.Distance(A.transform.localPosition , BtnList[j].transform.localPosition ) < 50)
-                            {
-                                check = true;   
-                            }
-                        }        
+                            check = true;   
+                        }
+                    }        
 
+                }//while
+
+
+                // 몬스터 조우 리스트 랜덤 설정 
+                while(true)
+                {
+                    int dumy = UnityEngine.Random.Range(0, DataMNG.GetComponent<DataControl>().data.MonLvRange -1);
+
+                    if(DataMNG.GetComponent<DataControl>().data.LV1Count > 0  &&
+                        dumy < 8  )
+                    {
+                        DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] = dumy;
+                        DataMNG.GetComponent<DataControl>().data.LV1Count--;
+                        break;
                     }
+                }
 
-                BtnList.Add(A);
-                DataMNG.GetComponent<DataControl>().data.BtnPos += A.transform.localPosition.x.ToString();
-                DataMNG.GetComponent<DataControl>().data.BtnPos += "X";
-                DataMNG.GetComponent<DataControl>().data.BtnPos += A.transform.localPosition.y.ToString();
-                DataMNG.GetComponent<DataControl>().data.BtnPos += "Y";
-                DataMNG.GetComponent<DataControl>().data.BtnPos += 1;
-                DataMNG.GetComponent<DataControl>().data.BtnPos += "!";
 
-                DataMNG.GetComponent<DataControl>().data.MeetBtnCount++;
+                int _i = i;
+                A.onClick.AddListener(delegate () { Meeting(_i); });
 
+
+
+
+                DataMNG.GetComponent<DataControl>().data.BtnPos.Add(A.transform.localPosition);
+                DataMNG.GetComponent<DataControl>().data.BtnCount++;
+                    
 
             }//for
+
+
+            NowBtn = MaxBtn;
         }//if
 
 
@@ -195,7 +180,12 @@ public class MeetingManager : MonoBehaviour {
         }
 
 
+        if(BlackOn )
+        {
+            FadeBlack.GetComponent<Image>().color += new Color(0, 0, 0, 2f * Time.deltaTime);
 
+            
+        }
 
 
 	}
@@ -209,7 +199,7 @@ public class MeetingManager : MonoBehaviour {
         {
             if(Input.GetMouseButton(0))
             {
-                Debug.Log("클릭!!! ");
+    
                 i = _story.Length  ;
             }
 
@@ -226,31 +216,21 @@ public class MeetingManager : MonoBehaviour {
 
 
     // 조우 버튼용 함수 
-    public void Meeting()
+    public void Meeting(int n)
     {
-        int mon = 99;
+        int mon = DataMNG.GetComponent<DataControl>().data.BtnSetMonster[n];
+        if (mon == 99) return;
 
-        while (true)
-        {
-            mon = UnityEngine.Random.Range(MeetMin, MeetMax);
+        IngBtn = n;
 
-
-            // Lv 1 조우 횟수 체크
-            if(mon < 8 &&
-                DataMNG.GetComponent<DataControl>().data.LV1Count > 0)
-            {
-                DataMNG.GetComponent<DataControl>().data.LV1Count--;
-                break;
-            }
-
-
-        }
-
+        Debug.Log("버튼 번호 : " + n + "  몬스터 번호 : " + mon);
 
         SetMeeting(mon);
 
         //조우 화면 중앙
-        Meet.transform.localPosition = new Vector3(0, -20, 0);
+
+
+      Meet.transform.localPosition = new Vector3(0, -20, 0);
 
         FadeOn = true;
 
@@ -282,19 +262,30 @@ public class MeetingManager : MonoBehaviour {
 
 
         //조우 바깥으로 이동
-        Meet.transform.localPosition = new Vector3(1000, -20, 0);
+        //Meet.transform.localPosition = new Vector3(1000, -20, 0);
 
-        Meet.GetComponent<Image>().color        = new Color(0, 0, 0, 0);
-        TextField.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
-        ChoisBtn.GetComponent<Image>().color    = new Color(0, 0, 0, 0);
-        BG.GetComponent<Image>().color          = new Color(0, 0, 0, 0);
-        Charector.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
-        Name.color                              = new Color(0, 0, 0, 0);
+        //Meet.GetComponent<Image>().color        = new Color(0, 0, 0, 0);
+        //TextField.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
+        //ChoisBtn.GetComponent<Image>().color    = new Color(0, 0, 0, 0);
+        //BG.GetComponent<Image>().color          = new Color(0, 0, 0, 0);
+        //Charector.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
+        //Name.color                              = new Color(0, 0, 0, 0);
 
 
+        DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn] = 99;
+        DataMNG.GetComponent<DataControl>().saveData();
 
+
+        FadeBlack.transform.localPosition = new Vector3(0, 0, 0);
+        BlackOn = true;
+
+        Invoke("SceneChange", 1);
+
+    }
+
+    public void SceneChange()
+    {
         SceneManager.LoadScene("Main");
-
     }
 }
 

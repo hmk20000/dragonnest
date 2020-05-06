@@ -8,8 +8,18 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour {
 
+    [SerializeField]
+    GameObject MSwindow;
+
+    [SerializeField]
+    GameObject BSwindow;
+
+
+
 	void Start () {
 		
+        
+
 	}
 	
 	void Update () {
@@ -17,8 +27,26 @@ public class ButtonManager : MonoBehaviour {
 	}
 
 
-    public void MagicSkillTree()
+    public void MagicSkillTreeOn()
     {
+        MSwindow.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
+    public void MagicSkillTreeOff()
+    {
+        MSwindow.transform.localPosition = new Vector3(2000, 0, 0);
+
+    }
+
+
+    public void BodySkillTreeOn()
+    {
+        BSwindow.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
+    public void BodySkillTreeOff()
+    {
+        BSwindow.transform.localPosition = new Vector3(2000, 0, 0);
 
     }
 
@@ -31,7 +59,10 @@ public class ButtonManager : MonoBehaviour {
     public void MainScene()
     {
         SceneManager.LoadScene("Main");
+        
     }
+
+
 }
 
 
