@@ -13,13 +13,13 @@ public class MeetingManager : MonoBehaviour {
     [SerializeField]
      GameObject Meet;
     [SerializeField]
-     GameObject BG;
+     GameObject MeetBG;
     [SerializeField]
      GameObject Charector;
     [SerializeField]
      Text Name;
     [SerializeField]
-     GameObject ChoisBtn;
+     GameObject NextBtn;
     [SerializeField]
     GameObject TextField;
     [SerializeField]
@@ -28,21 +28,35 @@ public class MeetingManager : MonoBehaviour {
 
     [SerializeField]
     GameObject FadeBlack;
+    [SerializeField]
+    Text FadeBlackText;
     bool BlackOn = false;
 
     bool FadeOn = false; // 조우창 패이드
-    bool BackCurtain = false;
 
 
+
+    [SerializeField]
+    GameObject ButtonField;
+    [SerializeField]
+    GameObject choice1;
+    [SerializeField]
+    GameObject choice2;
+    [SerializeField]
+    GameObject choice3;
+    [SerializeField]
+    Sprite use;
+    [SerializeField]
+    Sprite unuse;
 
 
     // 버튼 관리용 @@@@@@@@@@@@@@@@@@@@@@@@@@@
     [SerializeField]
-    GameObject Canvas;
+    GameObject CanvasBG;
     [SerializeField]
     Button NestBtn;
     int NowBtn = 0;
-    int MaxBtn = 5;
+    int MaxBtn = 0;
     
     public Button MeetBtn;
     int IngBtn = 99;
@@ -65,7 +79,7 @@ public class MeetingManager : MonoBehaviour {
             {
                 Button A = Instantiate(MeetBtn);
                 A.name = i.ToString();
-                A.transform.SetParent(Canvas.transform);
+                A.transform.SetParent(CanvasBG.transform);
                 A.transform.localPosition = DataMNG.GetComponent<DataControl>().data.BtnPos[i + 1]; // 홈버튼이 배열 0번에 저장되있음
 
                 int _i = i;
@@ -83,6 +97,7 @@ public class MeetingManager : MonoBehaviour {
             NowBtn = DataMNG.GetComponent<DataControl>().data.BtnCount;
         }//로드시 
 
+        MaxBtn = DataMNG.GetComponent<DataControl>().data.MaxBtnCount;
 
         
 
@@ -92,13 +107,13 @@ public class MeetingManager : MonoBehaviour {
 
             for( int i = NowBtn; i < MaxBtn; i++)
             {
-                    
+                Debug.Log("버튼 생성");
                 // 버튼 생성
                 var A =  Instantiate(MeetBtn);
                     A.name = i.ToString();
 
                 //버튼 위치 조절 
-                A.transform.SetParent(Canvas.transform);
+                A.transform.SetParent(CanvasBG.transform);
                 bool check = true;
                 while(check == true )
                 {
@@ -123,15 +138,54 @@ public class MeetingManager : MonoBehaviour {
                 // 몬스터 조우 리스트 랜덤 설정 
                 while(true)
                 {
-                    int dumy = UnityEngine.Random.Range(0, DataMNG.GetComponent<DataControl>().data.MonLvRange -1);
+                    int index = 0;
+                    if (DataMNG.GetComponent<DataControl>().data.LV1Count == 0)
+                    {
+                        index = 5;
+                        if(DataMNG.GetComponent<DataControl>().data.LV2Count == 0)
+                        {
+                            index = 9;
+                            if (DataMNG.GetComponent<DataControl>().data.LV3Count == 0)
+                                index = 10;
+                        }
+                    }
+
+
+                    int dumy = UnityEngine.Random.Range(index, DataMNG.GetComponent<DataControl>().data.MonLvRange -1);
 
                     if(DataMNG.GetComponent<DataControl>().data.LV1Count > 0  &&
-                        dumy < 8  )
+                        GetComponent<MonsterManager>().A[dumy].GetLv() == 1  )
                     {
                         DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] = dumy;
                         DataMNG.GetComponent<DataControl>().data.LV1Count--;
                         break;
                     }
+
+                    if (DataMNG.GetComponent<DataControl>().data.LV2Count > 0 &&
+                        GetComponent<MonsterManager>().A[dumy].GetLv() == 2)
+                    {
+                        DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] = dumy;
+                        DataMNG.GetComponent<DataControl>().data.LV2Count--;
+                        break;
+                    }
+                    
+                    if (DataMNG.GetComponent<DataControl>().data.LV3Count > 0 &&
+                        GetComponent<MonsterManager>().A[dumy].GetLv() == 3)
+                    {
+                        DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] = dumy;
+                        DataMNG.GetComponent<DataControl>().data.LV3Count--;
+                        break;
+                    }
+                    
+                    if (DataMNG.GetComponent<DataControl>().data.LV4Count > 0 &&
+                        GetComponent<MonsterManager>().A[dumy].GetLv() == 4)
+                    {
+                        DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] = dumy;
+                        DataMNG.GetComponent<DataControl>().data.LV4Count--;
+                        break;
+                    }
+
+
                 }
 
 
@@ -152,6 +206,8 @@ public class MeetingManager : MonoBehaviour {
         }//if
 
 
+
+
 	}
 	
 	void Update () {
@@ -160,32 +216,42 @@ public class MeetingManager : MonoBehaviour {
         // 조우화면 페이드
         if( FadeOn)
         {
-            Meet.GetComponent<Image>().color        += new Color(0, 0, 0, 1f * Time.deltaTime);
-            TextField.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
-            ChoisBtn.GetComponent<Image>().color    += new Color(0, 0, 0, 1f * Time.deltaTime);
-            BG.GetComponent<Image>().color          += new Color(0, 0, 0, 1f * Time.deltaTime);
+            Meet.GetComponent<Image>().color        += new Color(0, 0, 0, 3f * Time.deltaTime);
+            TextField.GetComponent<Image>().color   += new Color(0, 0, 0, 3f * Time.deltaTime);
+            MeetBG.GetComponent<Image>().color          += new Color(0, 0, 0, 3f * Time.deltaTime);
             
-            if (BG.GetComponent<Image>().color.a > 0.9) 
+            if (MeetBG.GetComponent<Image>().color.a > 0.9) 
             {
-                Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 1f * Time.deltaTime);
-                Name.color                              += new Color(0, 0, 0, 1f * Time.deltaTime);
+                Charector.GetComponent<Image>().color   += new Color(0, 0, 0, 0.6f * Time.deltaTime);
+                Name.color                              += new Color(0, 0, 0, 0.6f * Time.deltaTime);
 
                 if (Name.color.a >= 0.99)
                 {
                     FadeOn = false;
 
-                    StartCoroutine(  Story("테스트 중입니당 아주아주 길게 쓰는 사이에 버튼을 누르는 처ㅣ를 해보려고합니다.") );
+                    StartCoroutine(     Story(GetComponent<MonsterManager>().A[DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn]].GetStory()));
+
                 }
             }
         }
 
 
+        //블랙 커튼 
         if(BlackOn )
         {
             FadeBlack.GetComponent<Image>().color += new Color(0, 0, 0, 2f * Time.deltaTime);
+            if (FadeBlack.GetComponent<Image>().color.a > 0.9f) 
+                FadeBlackText.color += new Color(0, 0, 0, 1f * Time.deltaTime);
 
-            
+
+            if( FadeBlackText.color.a > 0.9)
+            {
+                if (Input.GetMouseButtonDown(0))
+                    SceneChange();
+            }
         }
+
+
 
 
 	}
@@ -201,6 +267,7 @@ public class MeetingManager : MonoBehaviour {
             {
     
                 i = _story.Length  ;
+
             }
 
             StoryText.text = _story.Substring(0, i);
@@ -209,6 +276,8 @@ public class MeetingManager : MonoBehaviour {
 
 
         }
+
+        NextBtn.GetComponent<Text>().color += new Color(0,0,0, 1);
 
         yield return null;
     }
@@ -219,11 +288,13 @@ public class MeetingManager : MonoBehaviour {
     public void Meeting(int n)
     {
         int mon = DataMNG.GetComponent<DataControl>().data.BtnSetMonster[n];
+
         if (mon == 99) return;
 
         IngBtn = n;
 
-        Debug.Log("버튼 번호 : " + n + "  몬스터 번호 : " + mon);
+        Debug.Log("버튼 번호 : " + n + "  몬스터 번호 : " + mon + " @@@ 스토리호출 : " + IngBtn);
+ 
 
         SetMeeting(mon);
 
@@ -245,7 +316,7 @@ public class MeetingManager : MonoBehaviour {
         Monster _target = GetComponent<MonsterManager>().A[_mon];
 
         //조우 화면 변경  
-        BG.GetComponent<Image>().sprite         = GetComponent<MonsterManager>().BGImg[_target.GetBackGroundNum()];
+        MeetBG.GetComponent<Image>().sprite         = GetComponent<MonsterManager>().BGImg[_target.GetBackGroundNum()];
         Charector.GetComponent<Image>().sprite  = GetComponent<MonsterManager>().MonImg[_target.GetImageNum()];
         Charector.transform.localScale          = new Vector3(_target.GetSize(), _target.GetSize());
         Name.text                               = _target.GetName();
@@ -255,21 +326,24 @@ public class MeetingManager : MonoBehaviour {
 
     }
 
-
-    // 플레이어의 선택 후
-    public void ChoiceButton()
+    //스토리 이후 플레이어 선택권 보여주는 버튼
+    public void StoryNextButton()
     {
 
+        choice3.GetComponent<Image>().sprite = unuse;
+      
+        ButtonField.transform.localPosition = new Vector3(0, -365, 0);
+    }
 
-        //조우 바깥으로 이동
-        //Meet.transform.localPosition = new Vector3(1000, -20, 0);
 
-        //Meet.GetComponent<Image>().color        = new Color(0, 0, 0, 0);
-        //TextField.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
-        //ChoisBtn.GetComponent<Image>().color    = new Color(0, 0, 0, 0);
-        //BG.GetComponent<Image>().color          = new Color(0, 0, 0, 0);
-        //Charector.GetComponent<Image>().color   = new Color(0, 0, 0, 0);
-        //Name.color                              = new Color(0, 0, 0, 0);
+    // 조우 때  플레이어의 3지선택 선택
+    public void ChoiceButton( int n)
+    {
+        if (n == 3)
+        {
+
+            return;
+        }
 
 
         DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn] = 99;
@@ -279,7 +353,7 @@ public class MeetingManager : MonoBehaviour {
         FadeBlack.transform.localPosition = new Vector3(0, 0, 0);
         BlackOn = true;
 
-        Invoke("SceneChange", 1);
+        //Invoke("SceneChange", 1);
 
     }
 

@@ -77,7 +77,7 @@ public class DataControl : MonoBehaviour {
         PlayerPrefs.SetString("data",jsonData);
 
 
-        Debug.Log(jsonData);
+        //Debug.Log(jsonData);
     }
 
 
