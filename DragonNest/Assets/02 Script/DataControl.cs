@@ -28,12 +28,11 @@ public class DataControl : MonoBehaviour {
 
 	void Start () {
         //저장 기능 리셋.
-      // PlayerPrefs.DeleteAll();
+       PlayerPrefs.DeleteAll();
 
 
 		loadData();
 
-        //saveData();
 
     }
 

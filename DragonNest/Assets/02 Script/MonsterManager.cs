@@ -30,7 +30,12 @@ public class Monster
     readonly int no = 0;          //이미지 넘버링 (enum 사용)
     readonly float size = 1;      //이미지 크기 비율
     readonly string story = "";   //조우시 스토리 라인
-    
+
+    struct MeetInfo
+    {
+        string BtnText;
+
+    }
 
 
     public string GetName()         { return name; }
@@ -41,6 +46,70 @@ public class Monster
     public string GetStory()          { return story; }
 
 }
+
+// 조우시 관련 대사
+public class MeetInfo
+{
+    public MeetInfo(string _c1, string _c2, string _c3 ,
+        int _1 ,string _1win, string _1lose,
+        int _2 ,string _2win, string _2lose,
+        int _3, string _3win, string _3lose   )
+
+    {
+
+        C1 = _c1;
+        C2 = _c2;
+        C3 = _c3;
+        C1_1 = _1win;
+        C1_2 = _1lose;
+        C2_1 = _2win;
+        C2_2 = _2lose;
+        C3_1 = _3win;
+        C3_2 = _3lose;
+
+        Skill1 = _1;
+        Skill2 = _2;
+        Skill3 = _3;
+
+    }
+
+
+    //선택지 
+    readonly string C1;
+    readonly string C2;
+    readonly string C3;
+
+    //선택지 결과
+    int Skill1;
+    readonly string C1_1;  // 성공
+    readonly string C1_2;  // 실패
+
+    int Skill2;
+    readonly string C2_1;
+    readonly string C2_2;
+
+    int Skill3;
+    readonly string C3_1;
+    readonly string C3_2;
+
+    public string GetC1() { return C1; }
+    public string GetC2() { return C2; }
+    public string GetC3() { return C3; }
+
+    public int GetSkill1() { return Skill1; }
+    public int GetSkill2() { return Skill2; }
+    public int GetSkill3() { return Skill3; }
+
+    public string GetC1_win() { return C1_1; }
+    public string GetC2_win() { return C2_1; }
+    public string GetC3_win() { return C3_1; }
+
+    public string GetC1_lose() { return C1_2; }
+    public string GetC2_lose() { return C2_2; }
+    public string GetC3_lose() { return C3_2; }
+
+};
+
 
 public class MonsterManager : MonoBehaviour {
 
@@ -114,6 +183,17 @@ public class MonsterManager : MonoBehaviour {
 
 
 
+    //  string _c1, string _c2, string _c3 , 
+    //   string _1win, string _1lose,   string _2win, string _2lose,    string _3win, string _3lose 
+    public MeetInfo[] B =
+    {
+        new MeetInfo ( "공격한다. " , "마법을 쓴다. " , "후려친다.  " ,
+                       0, "괜찮은 맛이었다. "  ,  "" ,
+                       1,  "" , "동전만 남기고 모두 불타버렸다.  ",
+                       2,  "아무일도 일어나지 않았다. " ,  "아무일도 일어나지 않았다.")
+                    
+
+    };
 
 
 }

@@ -18,7 +18,7 @@ public class SaveData
     public int MaxBtnCount = 5;
 
     public int LV1Count = 7;
-    public int LV2Count = 6;
+    public int LV2Count = 6;3
     public int LV3Count = 4;
     public int LV4Count = 3;
     public int MonLvRange = 5; //랜덤 함수에 -1 있음

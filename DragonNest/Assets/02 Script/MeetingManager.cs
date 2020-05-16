@@ -45,10 +45,18 @@ public class MeetingManager : MonoBehaviour {
     [SerializeField]
     GameObject choice3;
     [SerializeField]
+    Text C1;
+    [SerializeField]
+    Text C2;
+    [SerializeField]
+    Text C3;
+    [SerializeField]
     Sprite use;
     [SerializeField]
     Sprite unuse;
-
+    bool CBtn1 = true;
+    bool CBtn2 = true;
+    bool CBtn3 = true;
 
     // 버튼 관리용 @@@@@@@@@@@@@@@@@@@@@@@@@@@
     [SerializeField]
@@ -229,7 +237,7 @@ public class MeetingManager : MonoBehaviour {
                 {
                     FadeOn = false;
 
-                    StartCoroutine(     Story(GetComponent<MonsterManager>().A[DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn]].GetStory()));
+                    StartCoroutine(     Story(  GetComponent<MonsterManager>().A[ DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn]  ].GetStory()  )  );
 
                 }
             }
@@ -326,12 +334,63 @@ public class MeetingManager : MonoBehaviour {
 
     }
 
+
+    // 스킬 트리 생성 전 프로토 타입  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  삭제 예정
+    bool skill1 = true;
+    bool skill2 = true;
+    bool skill3 = false;
+
+
+
+
+
     //스토리 이후 플레이어 선택권 보여주는 버튼
     public void StoryNextButton()
     {
 
-        choice3.GetComponent<Image>().sprite = unuse;
+        C1.text = GetComponent<MonsterManager>().B[0].GetC1();
+        if(skill1 == true)  //    [ GetComponent<MonsterManager>().B[   IngBtn   ]  .GetSkill1()  ] 의 습득 체크
+        {
+
+        }
+        else
+        {
+            CBtn1 = false;
+            choice1.GetComponent<Image>().sprite = unuse;
+
+        }
+
+
+
+        C2.text = GetComponent<MonsterManager>().B[0].GetC2();
+        if (skill2 == true)  
+        {
+
+        }
+        else
+        {
+            CBtn2 = false;
+            choice2.GetComponent<Image>().sprite = unuse;
+
+        }
+
+
+
+        C3.text = GetComponent<MonsterManager>().B[0].GetC3();
+        if (skill3 == true) 
+        {
+
+        }
+        else
+        {
+            CBtn3 = false;
+            choice3.GetComponent<Image>().sprite = unuse;
+
+        }
+
       
+
+
         ButtonField.transform.localPosition = new Vector3(0, -365, 0);
     }
 
@@ -339,27 +398,64 @@ public class MeetingManager : MonoBehaviour {
     // 조우 때  플레이어의 3지선택 선택
     public void ChoiceButton( int n)
     {
-        if (n == 3)
+        switch(n)
         {
+            case 1:
+                {
+                    if (CBtn1 == false) return;
+                    FadeBlackText.text =  GetComponent<MonsterManager>().B[0].GetC1_win();
+                    break;
+                }
 
-            return;
+
+
+
+            case 2:
+                {
+                    if (CBtn2 == false) return;
+                    FadeBlackText.text = GetComponent<MonsterManager>().B[0].GetC2_lose();
+                    break;
+                }
+
+
+
+
+            case 3:
+                {
+                    if (CBtn3 == false) return;
+                    FadeBlackText.text = GetComponent<MonsterManager>().B[0].GetC3_win();
+                    break;
+                }
+
+
         }
 
 
+
+
+
+
+
         DataMNG.GetComponent<DataControl>().data.BtnSetMonster[IngBtn] = 99;
+        if (DataMNG.GetComponent<DataControl>().data.QuestList[0] == 1)
+            DataMNG.GetComponent<DataControl>().data.QuestInfoNow[0]++;
+            
+
         DataMNG.GetComponent<DataControl>().saveData();
 
 
         FadeBlack.transform.localPosition = new Vector3(0, 0, 0);
         BlackOn = true;
-
-        //Invoke("SceneChange", 1);
-
     }
 
     public void SceneChange()
     {
+
         SceneManager.LoadScene("Main");
+
+
     }
+
+
 }
 
