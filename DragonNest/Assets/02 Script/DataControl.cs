@@ -20,8 +20,6 @@ public class DataControl : MonoBehaviour {
     static int army = 0;
 
 
-    
-
 
     float time = 0;
     public SaveData data = new SaveData();
@@ -42,7 +40,7 @@ public class DataControl : MonoBehaviour {
         GoldPoint.text = data.gold.ToString();
         ManaPoint.text = data.mana.ToString();
         ArmyPoint.text = data.army.ToString();
-
+     
 
 
         //시간 경과 골드 생성 (저장 연습용)

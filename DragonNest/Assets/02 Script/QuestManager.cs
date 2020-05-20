@@ -14,7 +14,31 @@ public class QuestManager : MonoBehaviour {
 
     [SerializeField]
     GameObject QuestWindow;
-    
+
+    [SerializeField]
+    Text Turn;
+
+
+    int[] WaveInfo =
+    {
+        5,
+        5,
+        5,
+        5,
+        5,
+
+        5,
+        5,
+        5,
+
+        3,
+        3,
+        4
+
+    };
+
+
+
 
     //int Qcount = 0;
 
@@ -83,15 +107,15 @@ public class QuestManager : MonoBehaviour {
 
             }
 
-        }
+        }//for
 
 
 
     }
 	
 	void Update () {
-		
-	}
+        Turn.text = string.Format("다음 공세\n{0}/{1}", DataMNG.GetComponent<DataControl>().data.Nowturn, WaveInfo[DataMNG.GetComponent<DataControl>().data.NowWave]);
+    }
 
 
    string QuestSet (int n)

@@ -9,7 +9,8 @@ public class SaveData
     public int mana;
     public int army;
 
-
+    public float manaSupport = 0;
+    public float goldSupport = 0;
 
 
     public List<Vector3> BtnPos;
@@ -18,7 +19,7 @@ public class SaveData
     public int MaxBtnCount = 5;
 
     public int LV1Count = 7;
-    public int LV2Count = 6;3
+    public int LV2Count = 6;
     public int LV3Count = 4;
     public int LV4Count = 3;
     public int MonLvRange = 5; //랜덤 함수에 -1 있음
@@ -30,8 +31,10 @@ public class SaveData
     public int NowWave = 0;
 
 
-    public int[] BodySkill = new int[5];  //예시 스킬  0: 비활성 1:활성가능 2:활성화
-    
 
+
+    public int[] Skill = new int[50];  //0: 비활성 1:활성가능 2:활성화
+
+    public Queue<int> ArmyList; 
 
 }
