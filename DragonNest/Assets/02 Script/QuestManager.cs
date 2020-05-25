@@ -18,24 +18,18 @@ public class QuestManager : MonoBehaviour {
     [SerializeField]
     Text Turn;
 
-
-    int[] WaveInfo =
-    {
-        5,
-        5,
-        5,
-        5,
-        5,
-
-        5,
-        5,
-        5,
-
-        3,
-        3,
-        4
-
-    };
+    [SerializeField]
+    GameObject goldInfo;
+        [SerializeField]
+        Text goldText;
+        [SerializeField]
+        Text goldSupportInfo;
+    [SerializeField]
+    GameObject manaInfo;
+        [SerializeField]
+        Text manaText;
+        [SerializeField]
+        Text manaSupportInfo;
 
 
 
@@ -57,16 +51,6 @@ public class QuestManager : MonoBehaviour {
     };
 
 
-    int[] NextAttackTime =
-    {
-        2,
-        5,
-        8,
-        3,
-        3,
-        3
-    };
-
 
     void Start ()
     {
@@ -82,6 +66,10 @@ public class QuestManager : MonoBehaviour {
 
             //DataMNG.GetComponent<DataControl>().data.QuestInfoNow[0] = 5;
         }
+
+        if (DataMNG.GetComponent<DataControl>().data.Skill[12] == 2)
+            Turn.color += new Color(0, 0, 0, 1);
+
 
         // 활성화 시킬 퀘스트 체크
         for (int i = 0; i < DataMNG.GetComponent<DataControl>().data.QuestList.Length; i++)
@@ -114,7 +102,39 @@ public class QuestManager : MonoBehaviour {
     }
 	
 	void Update () {
-        Turn.text = string.Format("다음 공세\n{0}/{1}", DataMNG.GetComponent<DataControl>().data.Nowturn, WaveInfo[DataMNG.GetComponent<DataControl>().data.NowWave]);
+        Turn.text = string.Format("다음 공세\n{0}/{1}", DataMNG.GetComponent<DataControl>().data.Nowturn,
+            DataMNG.GetComponent<DataControl>().data.WaveInfo[DataMNG.GetComponent<DataControl>().data.NowWave]);
+
+        if(Input.mousePosition.x >  goldText.transform.position.x  - 20&&
+            Input.mousePosition.x < goldText.transform.position.x + 120 &&
+            Input.mousePosition.y > goldText.transform.position.y -30 &&
+            Input.mousePosition.y < goldText.transform.position.y +30             )
+                goldInfo.transform.position = goldText.transform.position + new Vector3 (40,0,0);
+        else
+                goldInfo.transform.localPosition = new Vector3(-500,0,0);
+
+        goldSupportInfo.text = string.Format("\n매턴 : {0}%\n\n\n{1}",
+                                               DataMNG.GetComponent<DataControl>().data.armyTurnCost,
+                                               DataMNG.GetComponent<DataControl>().data.goldSupport*100);
+   
+
+
+        if(Input.mousePosition.x >  manaText.transform.position.x  - 20&&
+            Input.mousePosition.x < manaText.transform.position.x + 120 &&
+            Input.mousePosition.y > manaText.transform.position.y -30 &&
+            Input.mousePosition.y < manaText.transform.position.y +30             )
+                manaInfo.transform.position = manaText.transform.position + new Vector3 (40,0,0);
+        else
+                manaInfo.transform.localPosition = new Vector3(-500,0,0);
+
+
+        manaSupportInfo.text = string.Format("\n+{0}%\n\n{1}",
+                                               DataMNG.GetComponent<DataControl>().data.manaSupport*100,
+                                               DataMNG.GetComponent<DataControl>().data.Skill[11]==2? "연금술 사용중" :"" );
+                                   
+
+
+
     }
 
 
@@ -174,7 +194,7 @@ public class QuestManager : MonoBehaviour {
             case 2:
                 {
 
-                    DataMNG.GetComponent<DataControl>().data.mana += 100;
+                    DataMNG.GetComponent<DataControl>().ManaPlus(100);
                     break;
                 }
 
@@ -191,6 +211,5 @@ public class QuestManager : MonoBehaviour {
         QuestWindow.transform.localPosition = new Vector3(-2000, 0, 0);
 
     }
-
 
 }

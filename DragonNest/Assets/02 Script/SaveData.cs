@@ -8,9 +8,11 @@ public class SaveData
     public int gold;
     public int mana;
     public int army;
+    public int armyTurnCost = 0;
 
     public float manaSupport = 0;
     public float goldSupport = 0;
+    public float powerSupport = 0;
 
 
     public List<Vector3> BtnPos;
@@ -22,19 +24,38 @@ public class SaveData
     public int LV2Count = 6;
     public int LV3Count = 4;
     public int LV4Count = 3;
-    public int MonLvRange = 5; //랜덤 함수에 -1 있음
+    public int MonLvRange = 6; //랜덤 함수에 -1 있음
 
     public int[] QuestList = new int[30];  //  0 : 비활성    1: 활성  2: 클리어  3 : 클리어 후 비활성화
     public int[] QuestInfoNow = new int[30];
 
     public int Nowturn = 0;
     public int NowWave = 0;
+    public int[] WaveInfo =
+{
+        5,
+        5,
+        5,
+        5,
+        5,
 
+        5,
+        5,
+        5,
 
+        3,
+        3,
+        4
+
+    };
+
+    public bool Green = false;
+    public bool Red = false;
 
 
     public int[] Skill = new int[50];  //0: 비활성 1:활성가능 2:활성화
 
     public Queue<int> ArmyList; 
 
+    
 }

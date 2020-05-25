@@ -26,7 +26,7 @@ public class DataControl : MonoBehaviour {
 
 	void Start () {
         //저장 기능 리셋.
-       PlayerPrefs.DeleteAll();
+     // PlayerPrefs.DeleteAll();
 
 
 		loadData();
@@ -85,6 +85,14 @@ public class DataControl : MonoBehaviour {
         }
         string stringData = PlayerPrefs.GetString("data");
         data = JsonToObject<SaveData>(stringData);
+    }
+
+
+
+
+    public void ManaPlus (int _getMana)
+    {
+        data.mana += _getMana + (_getMana * (int)(data.manaSupport)  );
     }
 
 

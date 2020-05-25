@@ -98,6 +98,7 @@ public class MeetingManager : MonoBehaviour {
                 if(DataMNG.GetComponent<DataControl>().data.BtnSetMonster[i] == 99)
                 {
                     A.GetComponent<Image>().color += new Color(0, 0, 0, -0.7f);
+                
                 }
             }
 
@@ -149,12 +150,12 @@ public class MeetingManager : MonoBehaviour {
                     int index = 0;
                     if (DataMNG.GetComponent<DataControl>().data.LV1Count == 0)
                     {
-                        index = 5;
+                        index = 6;
                         if(DataMNG.GetComponent<DataControl>().data.LV2Count == 0)
                         {
-                            index = 9;
+                            index = 12;
                             if (DataMNG.GetComponent<DataControl>().data.LV3Count == 0)
-                                index = 10;
+                                index = 16;
                         }
                     }
 
@@ -273,7 +274,7 @@ public class MeetingManager : MonoBehaviour {
         {
             if(Input.GetMouseButton(0))
             {
-    
+
                 i = _story.Length  ;
 
             }

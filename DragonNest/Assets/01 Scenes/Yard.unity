@@ -516,6 +516,8 @@ MonoBehaviour:
     gold: 0
     mana: 0
     army: 0
+    manaSupport: 0
+    goldSupport: 0
     BtnPos: []
     BtnSetMonster: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     BtnCount: 0
@@ -529,7 +531,7 @@ MonoBehaviour:
     QuestInfoNow: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     Nowturn: 0
     NowWave: 0
-    BodySkill: 0000000000000000000000000000000000000000
+    Skill: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,14 +879,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0.7490196, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c28442394042f7e4e8f9e76da187869e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea50c7cfc25469046869dc82de422d47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -956,7 +958,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 62efc6d8c966f164cb2e21f7265c558c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6fedbb841f084d640bc98227a1e22c94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1924,18 +1926,28 @@ MonoBehaviour:
   - {fileID: 21300000, guid: deba634632db6ef42856ed1c9f5d0c97, type: 3}
   - {fileID: 21300000, guid: ee9e8fc854e6bbf49a746548720057f0, type: 3}
   MonImg:
-  - {fileID: 21300000, guid: af52520d0f8025d4086e05cfe41a1cfe, type: 3}
-  - {fileID: 21300000, guid: ca61ef3e3b44b654aac5de73b6f3a5e4, type: 3}
-  - {fileID: 21300000, guid: 7130d728bafcf7f41bd30129800463db, type: 3}
-  - {fileID: 21300000, guid: 768624d410f731245899c08ef0c78b15, type: 3}
+  - {fileID: 21300000, guid: f1ac0ab6c3fd17c4e8cff4dfa67911b6, type: 3}
+  - {fileID: 21300000, guid: cb032672d8f77b6409a93e5f5bf0678d, type: 3}
+  - {fileID: 21300000, guid: 178e4dc410f02fb4ba87725e4a545012, type: 3}
+  - {fileID: 21300000, guid: 826bbb9f6002fe74d8f22171a013c9eb, type: 3}
   - {fileID: 21300000, guid: e6e7b2ddc94c69b4b847405f272eaf1f, type: 3}
-  - {fileID: 21300000, guid: 2a66645a99a1e964cb7ca457d10f2d03, type: 3}
-  - {fileID: 21300000, guid: 21eb5113834a4ce4f9ed402bcc579f70, type: 3}
-  - {fileID: 21300000, guid: aca2c4cba1487b84c9a56e050b05602d, type: 3}
+  - {fileID: 21300000, guid: abf0b3aac09020648b575282d5807668, type: 3}
+  - {fileID: 21300000, guid: b7ad895c917ef6c4089b03b32b1ac14e, type: 3}
+  - {fileID: 21300000, guid: d36f69c196803ad42ad2f28bdb4a2685, type: 3}
+  - {fileID: 21300000, guid: 8438ae25b0f348f4f8753a088693335b, type: 3}
   - {fileID: 21300000, guid: a07af7f67b851de42a2e42f3cb8f7686, type: 3}
-  - {fileID: 21300000, guid: bf06103734987b34081ec6fab8987125, type: 3}
-  - {fileID: 21300000, guid: 92869d3c0f3d1d848855fdbe5d7721c7, type: 3}
-  - {fileID: 21300000, guid: e650474abc8449542bac4531d1ac2811, type: 3}
+  - {fileID: 21300000, guid: 4468d8e25ccd38a49bd2808caeeaf0a3, type: 3}
+  - {fileID: 21300000, guid: ec545129f4ca09947a24b06401b86f59, type: 3}
+  - {fileID: 21300000, guid: 6704638e67aad714e92c93d8e30660dc, type: 3}
+  - {fileID: 21300000, guid: 56b1615b5e91d794c8287232eaeb4f82, type: 3}
+  - {fileID: 21300000, guid: ee443079f89a6814d8760571641f8e7d, type: 3}
+  - {fileID: 21300000, guid: 1ad0fdf0bdec7fc4aa07e710d2567b22, type: 3}
+  - {fileID: 21300000, guid: 11c4a3956d5417144a47a709ef74e410, type: 3}
+  - {fileID: 21300000, guid: 456bc8a29dab785408feea81f9202bca, type: 3}
+  - {fileID: 21300000, guid: bac0acb1f1fbb9648b6d51b00e01071c, type: 3}
+  - {fileID: 21300000, guid: a9da112b6eb595e4a9cb4c7c4ee67370, type: 3}
+  - {fileID: 21300000, guid: 6d1bea2c600258c4e8a84856b95c95dc, type: 3}
+  - {fileID: 21300000, guid: 5e4dbd19db291a244959baf5abcaa2eb, type: 3}
 --- !u!114 &1805893985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1968,7 +1980,7 @@ MonoBehaviour:
   unuse: {fileID: 21300000, guid: 54b8874a7d504c3479b206364ad9d5eb, type: 3}
   CanvasBG: {fileID: 1428428968}
   NestBtn: {fileID: 2007562774}
-  MeetBtn: {fileID: 114289628108025538, guid: 3e22457078984fe4faeab710305f0e03, type: 2}
+  MeetBtn: {fileID: 114978403988509408, guid: 3e22457078984fe4faeab710305f0e03, type: 2}
 --- !u!1 &1843522850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,7 +2037,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 039b5ed7c8949d2449dbcf1d77f2f868, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6fedbb841f084d640bc98227a1e22c94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2546,14 +2558,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0.7490196, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c28442394042f7e4e8f9e76da187869e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea50c7cfc25469046869dc82de422d47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
